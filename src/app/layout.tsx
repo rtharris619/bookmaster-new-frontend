@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { BookOpen, Github, Twitter, Mail } from 'lucide-react';
+import Link from 'next/link';
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -35,10 +36,15 @@ export default function RootLayout({
                   </h1>
                 </div>
                 <nav className="hidden md:flex items-center space-x-6">
-                  <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">Home</a>
-                  <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">Browse</a>
-                  <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">Categories</a>
+                  <Link href="/" className="text-gray-300 hover:text-blue-400 transition-colors">
+                    Home
+                  </Link>
+                  {/* <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">Browse</a>
+                  <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">Categories</a> */}
                   <a href="#" className="text-gray-300 hover:text-blue-400 transition-colors">About</a>
+                  <Link href="/login" className="text-gray-300 hover:text-blue-400 transition-colors">
+                    Login
+                  </Link>
                 </nav>
               </div>
             </div>
