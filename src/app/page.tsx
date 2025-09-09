@@ -149,6 +149,7 @@ function HomeContent() {
       </div>
 
       <main className="flex-1">
+        Main Contents coming soon...
       </main>
       </>
   }
@@ -156,11 +157,8 @@ function HomeContent() {
 
 export default function Home() {
   
-
   return (
-    <AuthProvider>
-      <HomeContent>        
-      </HomeContent>
-    </AuthProvider>
+    <HomeContent>
+    </HomeContent>
   );
 }
