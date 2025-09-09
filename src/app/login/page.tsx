@@ -7,6 +7,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { BookOpen, Eye, EyeOff } from 'lucide-react';
 import { Input } from '../components/ui/input';
 
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../contexts/AuthContext';
+
 export default function Login() {
 
   const [email, setEmail] = useState('');
@@ -14,15 +17,28 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
+  const { login } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     console.log('Login attempt:', { email, password });
 
-    setTimeout(() => {
+    try {
+      const success = await login(email, password);
+      if (success) {
+        router.push('/');
+      } else {
+        alert('Login failed. Please check your credentials and try again.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('An error occurred during login. Please try again later.');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   }
 
   return (
@@ -106,12 +122,12 @@ export default function Login() {
                 {isLoading ? 'Signing in...' : 'Sign in'}
               </Button>
 
-              <div className='text-center text-sm text-gray-400'>
+              {/* <div className='text-center text-sm text-gray-400'>
                 Don't have an account?{' '}
                 <Link href="/register" className="text-blue-400 hover:text-blue-300 font-medium">
                   Sign up
                 </Link>
-              </div>
+              </div> */}
             </CardFooter>
           </form>
         </Card>

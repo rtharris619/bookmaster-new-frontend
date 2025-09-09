@@ -3,6 +3,7 @@
 import React, {useState} from "react";
 import SearchBar from "./components/search-bar";
 import BookCard from "./components/book-card";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 // Sample book data
 const sampleBooks = [
@@ -88,13 +89,13 @@ const sampleBooks = [
   }
 ];
 
-export default function Home() {
+function HomeContent() {
+  const { isLoggedIn } = useAuth();
   const [books, setBooks] = useState(sampleBooks);
-
   const [searchTerm, setSearchTerm] = useState('');
 
-  return (
-    <>
+  if (isLoggedIn) {
+    return <>
       <div className="bg-gray-800 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center mb-8">
@@ -134,7 +135,32 @@ export default function Home() {
           )}
         </div>
       </main>
-    </>
-    
+      </>
+  }
+
+  if (!isLoggedIn) {
+    return <>
+      <div className="bg-gray-800 border-b border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center mb-8">
+            <p className="text-gray-400 text-lg">Home Contents coming soon...</p>
+          </div>
+        </div>
+      </div>
+
+      <main className="flex-1">
+      </main>
+      </>
+  }
+}
+
+export default function Home() {
+  
+
+  return (
+    <AuthProvider>
+      <HomeContent>        
+      </HomeContent>
+    </AuthProvider>
   );
 }
